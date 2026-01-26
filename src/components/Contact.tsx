@@ -13,12 +13,27 @@ const Contact = () => {
     e.preventDefault()
     setStatus('sending')
     
-    // Simulate API call
-    setTimeout(() => {
-      setStatus('sent')
-      setFormData({ name: '', email: '', message: '' })
+    try {
+      const response = await fetch('https://formspree.io/f/mjgwvnpo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setStatus('sent')
+        setFormData({ name: '', email: '', message: '' })
+        setTimeout(() => setStatus('idle'), 3000)
+      } else {
+        setStatus('error')
+        setTimeout(() => setStatus('idle'), 3000)
+      }
+    } catch {
+      setStatus('error')
       setTimeout(() => setStatus('idle'), 3000)
-    }, 1500)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -237,8 +252,14 @@ const Contact = () => {
               disabled={status === 'sending'}
               className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-semibold hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
             >
-              {status === 'sending' ? 'Sending...' : status === 'sent' ? 'Message Sent!' : 'Submit'}
+              {status === 'sending' ? 'Sending...' : status === 'sent' ? 'Message Sent! ✓' : status === 'error' ? 'Failed. Try Again' : 'Submit'}
             </button>
+            
+            {status === 'error' && (
+              <p className="text-red-400 text-sm text-center mt-2">
+                Something went wrong. Please try again or email directly.
+              </p>
+            )}
           </form>
         </div>
       </div>

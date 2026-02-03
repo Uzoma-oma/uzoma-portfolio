@@ -1,4 +1,3 @@
-// Import your image from assets folder
 import aboutImg from '../assets/about.jpeg'
 
 const About = () => {
@@ -15,11 +14,7 @@ const About = () => {
             <div className="relative p-1 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 animate-gradient">
               <div className="glass rounded-2xl p-8 hover:scale-105 transition-transform duration-300 bg-[#0a0a0a]">
                 <div className="w-full h-80 md:h-96 lg:h-[28rem] bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center overflow-hidden">
-                  {/* 
-                    IMPORTANT: Use import like this:
-                    import aboutImg from '../assets/about.jpg'
-                    Then use: <img src={aboutImg} ... />
-                  */}
+                  
                   <img src={aboutImg} alt="About Me" className="w-full h-full object-cover" />
                 </div>
               </div>
